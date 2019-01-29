@@ -4,6 +4,7 @@ package io.fotoapparat.preview
 
 import android.graphics.ImageFormat
 import android.hardware.Camera
+import android.util.Log
 import io.fotoapparat.hardware.frameProcessingExecutor
 import io.fotoapparat.hardware.orientation.Orientation
 import io.fotoapparat.parameter.Resolution
@@ -51,9 +52,10 @@ internal class PreviewStream(private val camera: Camera) {
         camera.setPreviewCallbackWithBuffer { data, _ ->
             if (data == null) {
                 dispatchFrameOnBackgroundThread(ByteArray(0))
+                Log.e("DINERO-FOTOAPPARAT", "Empty data array")
+                throw Exception("Empty data array")
             } else {
-                dispatchFrameOnBackgroundThread(ByteArray(0))
-                // dispatchFrameOnBackgroundThread(data)
+                dispatchFrameOnBackgroundThread(data)
             }
         }
     }
