@@ -51,11 +51,10 @@ internal class PreviewStream(private val camera: Camera) {
 
         camera.setPreviewCallbackWithBuffer { data, _ ->
             if (data != null) {
+                dispatchFrameOnBackgroundThread(data)
+            } else {
                 dispatchFrameOnBackgroundThread(ByteArray(0))
                 Log.e("DINERO-FOTOAPPARAT", "Empty data array")
-                throw Exception("Empty data array")
-            } else {
-                dispatchFrameOnBackgroundThread(data)
             }
         }
     }
