@@ -48,7 +48,14 @@ internal class PreviewStream(private val camera: Camera) {
     private fun start() {
         camera.addFrameToBuffer()
 
-        camera.setPreviewCallbackWithBuffer { data, _ -> dispatchFrameOnBackgroundThread(data) }
+        camera.setPreviewCallbackWithBuffer { data, _ ->
+            if (data == null) {
+                dispatchFrameOnBackgroundThread(ByteArray(0))
+            } else {
+                dispatchFrameOnBackgroundThread(ByteArray(0))
+                // dispatchFrameOnBackgroundThread(data)
+            }
+        }
     }
 
     /**
